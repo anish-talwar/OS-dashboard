@@ -1,4 +1,4 @@
-# Anish Dashboard - Vintage Macintosh Productivity Tool
+# Personal Dashboard OS- Vintage Productivity Tool
 
 A retro-inspired web-based productivity dashboard with a vintage Macintosh System 6/7 aesthetic. Built with pure HTML, CSS, and JavaScript for maximum compatibility and offline functionality.
 
