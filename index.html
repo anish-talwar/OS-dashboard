@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anish Dashboard - Vintage Mac Style</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/windows.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/menubar.css">
+    <link rel="stylesheet" href="css/controlpanel.css">
+</head>
+<body>
+    <!-- Macintosh System 7 Menu Bar -->
+    <div class="menu-bar">
+        <!-- Apple Menu -->
+        <div class="menu-item" id="appleMenu">🍎</div>
+
+        <!-- File Menu -->
+        <div class="menu-item" id="fileMenuBtn">File
+            <div class="menu-dropdown" id="fileMenu">
+                <div class="menu-dropdown-item" onclick="newTask()">New Task <span class="menu-shortcut">⌘N</span></div>
+                <div class="menu-dropdown-item" onclick="newGoal()">New Goal</div>
+                <div class="menu-separator"></div>
+                <div class="menu-dropdown-item" onclick="exportData()">Export Data</div>
+                <div class="menu-separator"></div>
+                <div class="menu-dropdown-item" onclick="closeAllWindows()">Close All</div>
+            </div>
+        </div>
+
+        <!-- Edit Menu -->
+        <div class="menu-item" id="editMenuBtn">Edit
+            <div class="menu-dropdown" id="editMenu">
+                <div class="menu-dropdown-item" onclick="undoAction()">Undo <span class="menu-shortcut">⌘Z</span></div>
+                <div class="menu-separator"></div>
+                <div class="menu-dropdown-item" onclick="selectAll()">Select All <span class="menu-shortcut">⌘A</span></div>
+            </div>
+        </div>
+
+        <!-- View Menu -->
+        <div class="menu-item" id="viewMenuBtn">View
+            <div class="menu-dropdown" id="viewMenu">
+                <div class="menu-dropdown-item" onclick="toggleWindow('taskWindow')">Task Tracker</div>
+                <div class="menu-dropdown-item" onclick="toggleWindow('goalWindow')">Goals</div>
+                <div class="menu-dropdown-item" onclick="toggleWindow('statsWindow')">Statistics</div>
+                <div class="menu-dropdown-item" onclick="toggleWindow('summaryWindow')">Monthly Summary</div>
+                <div class="menu-dropdown-item" onclick="toggleWindow('controlPanelWindow')">Control Panels</div>
+            </div>
+        </div>
+
+        <!-- Windows Menu -->
+        <div class="menu-item" id="windowsMenuBtn">Windows
+            <div class="menu-dropdown" id="windowsMenu">
+                <div class="menu-dropdown-item" onclick="restoreWindow('taskWindow')">📝 Task Tracker</div>
+                <div class="menu-dropdown-item" onclick="restoreWindow('goalWindow')">🎯 Goals</div>
+                <div class="menu-dropdown-item" onclick="restoreWindow('statsWindow')">📊 Statistics</div>
+                <div class="menu-dropdown-item" onclick="restoreWindow('summaryWindow')">📋 Monthly Summary</div>
+                <div class="menu-dropdown-item" onclick="restoreWindow('controlPanelWindow')">⚙️ Control Panels</div>
+                <div class="menu-separator"></div>
+                <div class="menu-dropdown-item" onclick="arrangeWindows()">Arrange All</div>
+            </div>
+        </div>
+
+        <!-- Help Menu -->
+        <div class="menu-item" id="helpMenuBtn">Help
+            <div class="menu-dropdown" id="helpMenu">
+                <div class="menu-dropdown-item" onclick="showAbout()">About Anish Dashboard</div>
+                <div class="menu-separator"></div>
+                <div class="menu-dropdown-item" onclick="showHelp()">Help Topics <span class="menu-shortcut">?</span></div>
+            </div>
+        </div>
+
+        <div class="menu-spacer"></div>
+    </div>
+
+    <!-- Desktop Container -->
+    <div class="desktop-area">
+            <!-- Task Tracker Window -->
+            <div class="mac-window" id="taskWindow" style="left: 20px; top: 40px; width: 500px; z-index: 1;">
+                <div class="window-header" style="cursor: move;">
+                    <div class="window-title">📝 Task Tracker</div>
+                    <div class="window-controls">
+                        <button class="window-btn close-btn" onclick="toggleWindow('taskWindow')">−</button>
+                    </div>
+                </div>
+                <div class="window-body">
+                    <div class="task-controls">
+                        <input type="text" id="taskInput" class="mac-input" placeholder="New task...">
+                        <button class="mac-button" onclick="addTask()">Add Task</button>
+                    </div>
+                    <div class="filter-tabs">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="today">Today</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="completed">Done</button>
+                    </div>
+                    <div class="task-list" id="taskList"></div>
+                </div>
+            </div>
+
+            <!-- Goals Window -->
+            <div class="mac-window" id="goalsWindow" style="left: 540px; top: 40px; width: 480px; z-index: 1;">
+                <div class="window-header" style="cursor: move;">
+                    <div class="window-title">🎯 Semester Goals</div>
+                    <div class="window-controls">
+                        <button class="window-btn close-btn" onclick="toggleWindow('goalsWindow')">−</button>
+                    </div>
+                </div>
+                <div class="window-body">
+                    <div class="goal-controls">
+                        <input type="text" id="goalInput" class="mac-input" placeholder="New goal...">
+                        <button class="mac-button" onclick="addGoal()">Add Goal</button>
+                    </div>
+                    <div class="goals-list" id="goalsList"></div>
+                </div>
+            </div>
+
+            <!-- Statistics Window -->
+            <div class="mac-window" id="statsWindow" style="left: 20px; top: 380px; width: 500px; z-index: 1;">
+                <div class="window-header" style="cursor: move;">
+                    <div class="window-title">📊 Statistics & Trends</div>
+                    <div class="window-controls">
+                        <button class="window-btn close-btn" onclick="toggleWindow('statsWindow')">−</button>
+                    </div>
+                </div>
+                <div class="window-body">
+                    <div class="stats-container">
+                        <div class="stat-item">
+                            <div class="stat-label">Tasks Completed</div>
+                            <div class="stat-value" id="completedCount">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Active Tasks</div>
+                            <div class="stat-value" id="activeCount">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Goals In Progress</div>
+                            <div class="stat-value" id="activeGoals">0</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-title">Tasks Completed (Last 7 Days)</div>
+                        <canvas id="trendsChart" class="retro-chart" width="800" height="150"></canvas>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: #000080;"></div>
+                                <span>Completed</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: #d0d0d0; border: 1px solid #000000;"></div>
+                                <span>Total</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Summary Window -->
+            <div class="mac-window" id="summaryWindow" style="left: 540px; top: 380px; width: 480px; z-index: 1;">
+                <div class="window-header" style="cursor: move;">
+                    <div class="window-title">📋 Monthly Summary</div>
+                    <div class="window-controls">
+                        <button class="window-btn close-btn" onclick="toggleWindow('summaryWindow')">−</button>
+                    </div>
+                </div>
+                <div class="window-body">
+                    <div class="summary-controls">
+                        <button class="mac-button" onclick="generateMonthlySummary()">Generate Summary</button>
+                        <button class="mac-button" onclick="exportPDF()">Export PDF</button>
+                        <button class="mac-button" onclick="exportMarkdown()">Export MD</button>
+                    </div>
+                    <div class="summary-content" id="summaryContent"></div>
+                </div>
+            </div>
+
+            <!-- Control Panels Window -->
+            <div class="mac-window" id="controlPanelWindow" style="left: 200px; top: 100px; width: 450px; z-index: 1; display: none;">
+                <div class="window-header" style="cursor: move;">
+                    <div class="window-title">⚙️ Control Panels</div>
+                    <div class="window-controls">
+                        <button class="window-btn close-btn" onclick="toggleWindow('controlPanelWindow')">−</button>
+                    </div>
+                </div>
+                <div class="window-body" style="padding: 0;">
+                    <!-- Tab Navigation -->
+                    <div class="control-panel-tabs">
+                        <div class="panel-tab active" onclick="switchPanel('appearance')">Appearance</div>
+                        <div class="panel-tab" onclick="switchPanel('sounds')">Sounds</div>
+                    </div>
+
+                    <!-- Appearance Panel -->
+                    <div id="appearance" class="panel-content active">
+                        <div class="preference-group">
+                            <label class="preference-label">Theme</label>
+                            <select id="themeSelect" class="preference-select">
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                            </select>
+                        </div>
+
+                        <div class="preference-group">
+                            <label class="preference-label">Accent Color</label>
+                            <div class="preference-control">
+                                <input type="color" id="accentColorInput" class="preference-input" value="#000080">
+                            </div>
+                        </div>
+
+                        <div class="preference-group">
+                            <label class="preference-label">Font Size</label>
+                            <select id="fontSizeSelect" class="preference-select">
+                                <option value="10">10px</option>
+                                <option value="11">11px</option>
+                                <option value="12" selected>12px (Default)</option>
+                                <option value="14">14px</option>
+                                <option value="16">16px</option>
+                                <option value="18">18px</option>
+                                <option value="20">20px</option>
+                                <option value="24">24px</option>
+                                <option value="28">28px</option>
+                                <option value="32">32px</option>
+                                <option value="36">36px</option>
+                                <option value="40">40px</option>
+                                <option value="48">48px</option>
+                                <option value="56">56px</option>
+                                <option value="64">64px</option>
+                                <option value="72">72px</option>
+                                <option value="80">80px</option>
+                                <option value="88">88px</option>
+                                <option value="96">96px</option>
+                                <option value="128">128px</option>
+                                <option value="160">160px</option>
+                                <option value="192">192px</option>
+                                <option value="216">216px</option>
+                                <option value="246">246px</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Sounds Panel -->
+                    <div id="sounds" class="panel-content">
+                        <div class="preference-group">
+                            <label class="preference-checkbox-label">
+                                <input type="checkbox" id="soundToggle" class="preference-checkbox">
+                                Enable Sound
+                            </label>
+                        </div>
+
+                        <div class="preference-group">
+                            <label class="preference-label">Master Volume</label>
+                            <div class="preference-control">
+                                <input type="range" id="masterVolumeSlider" class="preference-input" min="0" max="100" value="50">
+                                <span class="volume-display" id="volumeValue">50%</span>
+                            </div>
+                        </div>
+
+                        <div class="preference-group">
+                            <label class="preference-label">Alert Sound</label>
+                            <select id="alertSoundSelect" class="preference-select">
+                                <option value="beep">Beep</option>
+                                <option value="chime">Chime</option>
+                                <option value="pop">Pop</option>
+                                <option value="click">Click</option>
+                            </select>
+                            <button id="testSoundBtn" class="mac-button" style="margin-top: 8px; padding: 4px 12px;">Test Sound</button>
+                        </div>
+
+                        <div class="preference-group">
+                            <label class="preference-checkbox-label">
+                                <input type="checkbox" id="soundEffectsToggle" class="preference-checkbox" checked>
+                                Sound Effects
+                            </label>
+                            <label class="preference-checkbox-label">
+                                <input type="checkbox" id="systemSoundsToggle" class="preference-checkbox" checked>
+                                System Sounds
+                            </label>
+                        </div>
+
+                        <div class="preference-group">
+                            <button id="resetBtn" class="mac-button" style="margin-top: 8px; padding: 4px 12px;">Reset to Defaults</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div id="taskModal" class="modal">
+        <div class="mac-window modal-window" style="width: 400px;">
+            <div class="window-header">
+                <div class="window-title">Task Details</div>
+                <div class="window-controls">
+                    <button class="window-btn close-btn" onclick="closeTaskModal()">×</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <form id="taskForm" onsubmit="saveTask(event)">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="taskTitle" class="mac-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="taskDesc" class="mac-input" rows="3"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Priority</label>
+                            <select id="taskPriority" class="mac-input">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>Category</label>
+                            <select id="taskCategory" class="mac-input">
+                                <option value="Project">Project</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Learning">Learning</option>
+                                <option value="Personal">Personal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="taskDueDate" class="mac-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Tags (comma-separated)</label>
+                        <input type="text" id="taskTags" class="mac-input" placeholder="e.g., urgent, frontend">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="mac-button">Save</button>
+                        <button type="button" class="mac-button" onclick="closeTaskModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Goal Detail Modal -->
+    <div id="goalModal" class="modal">
+        <div class="mac-window modal-window" style="width: 400px;">
+            <div class="window-header">
+                <div class="window-title">Goal Details</div>
+                <div class="window-controls">
+                    <button class="window-btn close-btn" onclick="closeGoalModal()">×</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <form id="goalForm" onsubmit="saveGoal(event)">
+                    <div class="form-group">
+                        <label>Goal Title</label>
+                        <input type="text" id="goalTitle" class="mac-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="goalDesc" class="mac-input" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Progress (%)</label>
+                        <input type="number" id="goalProgress" class="mac-input" min="0" max="100" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Milestones (one per line)</label>
+                        <textarea id="goalMilestones" class="mac-input" rows="3" placeholder="Milestone 1&#10;Milestone 2"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="mac-button">Save</button>
+                        <button type="button" class="mac-button" onclick="closeGoalModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Window -->
+    <div id="aboutWindow" class="modal" style="display: none;">
+        <div class="mac-window modal-window" style="width: 380px;">
+            <div class="window-header">
+                <div class="window-title">About This Dashboard</div>
+                <div class="window-controls">
+                    <button class="window-btn close-btn" onclick="closeAbout()">×</button>
+                </div>
+            </div>
+            <div class="window-body about-content">
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; margin-bottom: 10px;">🖥️</div>
+                    <h2 style="margin: 10px 0; font-size: 16px;">Anish Dashboard</h2>
+                    <p style="margin: 10px 0; font-size: 12px;">A vintage Macintosh-inspired<br>productivity dashboard</p>
+                    <p style="margin: 20px 0; font-size: 11px; color: #555;">Built with ❤️ using retro Mac aesthetics<br>for modern productivity</p>
+                    <p style="font-size: 10px; color: #999;">v1.0 • December 2025</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Scripts -->
+    <script src="js/menubar.js"></script>
+    <script src="js/background.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/goals.js"></script>
+    <script src="js/summary.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/controlpanel.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+/* Mac Window Components */
+
+.mac-window {
+    position: absolute;
+    background: var(--color-darkbg);
+    border: 1px solid;
+    border-color: var(--color-highlight) var(--color-shadow) var(--color-shadow) var(--color-highlight);
+    box-shadow: 
+        inset 1px 1px 0 var(--color-highlight),
+        inset -1px -1px 0 var(--color-shadow);
+    min-width: 200px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-family);
+    z-index: 1;
+    resize: both;
+    overflow: hidden;
+}
+
+.mac-window.active {
+    z-index: 100;
+}
+
+.window-header {
+    background: var(--color-darkbg);
+    color: var(--color-fg);
+    padding: 2px 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 16px;
+    border-bottom: 1px solid var(--color-border);
+    user-select: none;
+    flex-shrink: 0;
+    border-top: 1px solid var(--color-highlight);
+    border-left: 1px solid var(--color-highlight);
+    border-right: 1px solid var(--color-shadow);
+}
+
+.window-title {
+    font-weight: bold;
+    font-size: 0.833em;
+    padding: 1px 3px;
+    flex: 1;
+    text-align: left;
+    letter-spacing: 0px;
+}
+
+.window-controls {
+    display: flex;
+    gap: 2px;
+    padding-right: 2px;
+}
+
+.window-btn {
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    font-size: 0.833em;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s;
+    font-family: var(--font-family);
+}
+
+.window-btn:hover {
+    background: #d0d0d0;
+}
+
+.window-btn:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.close-btn {
+    background: var(--color-shadow);
+    color: white;
+    border-color: #ffffff #000000 #000000 #ffffff;
+}
+
+.close-btn:hover {
+    background: #909090;
+}
+
+.window-body {
+    padding: 8px;
+    background: var(--color-darkbg);
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.window-body > * {
+    flex-shrink: 0;
+}
+
+.window-body > .content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modal Overlay */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-window {
+    position: static;
+    box-shadow: 
+        inset 1px 1px 0 var(--color-highlight),
+        inset -1px -1px 0 var(--color-shadow),
+        0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Dragging State */
+.mac-window.dragging {
+    opacity: 0.9;
+    cursor: move;
+}
+
+/* About Content */
+.about-content {
+    justify-content: center;
+    text-align: center;
+}
+
+.about-content h2 {
+    font-size: 1.167em;
+    font-weight: bold;
+}
+
+.about-content p {
+    font-size: 0.917em;
+    line-height: 1.4;
+}

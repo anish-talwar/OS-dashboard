@@ -1,0 +1,202 @@
+/* Control Panels - System Preferences Styling */
+
+.control-panel-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: #c0c0c0;
+    border-bottom: 1px solid #000000;
+}
+
+.panel-tab {
+    padding: 6px 12px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    cursor: pointer;
+    font-size: 0.917em;
+    font-weight: bold;
+    font-family: 'Chicago', 'Monaco', monospace;
+    color: #000000;
+    transition: none;
+}
+
+.panel-tab.active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    background: #dfdfdf;
+}
+
+.panel-tab:hover:not(.active) {
+    background: #dfdfdf;
+}
+
+.panel-content {
+    display: none;
+    padding: 16px;
+    background: #c0c0c0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.panel-content.active {
+    display: block;
+}
+
+.preference-group {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #808080;
+}
+
+.preference-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.preference-label {
+    display: block;
+    font-size: 0.917em;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+.preference-description {
+    display: block;
+    font-size: 0.833em;
+    color: #666666;
+    margin-bottom: 6px;
+}
+
+.preference-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.preference-select,
+.preference-input {
+    padding: 4px 6px;
+    background: #ffffff;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    font-size: 0.917em;
+    font-family: 'Chicago', 'Monaco', monospace;
+    color: #000000;
+}
+
+.preference-select {
+    min-width: 140px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.preference-input[type="color"] {
+    width: 60px;
+    height: 28px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.preference-input[type="range"] {
+    flex: 1;
+    max-width: 200px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.volume-display {
+    min-width: 40px;
+    text-align: right;
+    font-size: 0.917em;
+    font-weight: bold;
+    color: #000000;
+}
+
+.preference-checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #000080;
+}
+
+.preference-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.917em;
+    color: #000000;
+    margin-bottom: 6px;
+    user-select: none;
+}
+
+.preference-checkbox-label:hover {
+    background: #dfdfdf;
+    padding: 2px 4px;
+    margin: -2px -4px 6px -4px;
+}
+
+.color-preview {
+    width: 40px;
+    height: 28px;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    background: #000080;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #808080;
+    justify-content: flex-end;
+}
+
+#testSoundBtn,
+#resetBtn {
+    padding: 6px 16px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    font-size: 0.917em;
+    font-weight: bold;
+    font-family: 'Chicago', 'Monaco', monospace;
+    color: #000000;
+    cursor: pointer;
+    transition: none;
+    flex-shrink: 0;
+}
+
+#testSoundBtn:active,
+#resetBtn:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+}
+
+#testSoundBtn:hover,
+#resetBtn:hover {
+    background: #dfdfdf;
+}
+
+#testSoundBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #c0c0c0;
+}
+
+.sound-note {
+    font-size: 0.833em;
+    color: #666666;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Control Panel Window Body Override */
+#controlPanelWindow .window-body {
+    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    max-height: 450px;
+}
